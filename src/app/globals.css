@@ -1,42 +1,36 @@
+/* --- src/app/globals.css (Success Cockpit Theme) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light Mode (Default) */
+  --background-color: #F7FAFC; /* Glacier Ice */
+  --text-primary: #2D3748;      /* Charcoal */
+  --text-secondary: #718096;    /* Slate Gray */
+  --surface-color: #FFFFFF;      /* Summit White */
+  --border-color: #E2E8F0;
+  --primary-red: #D90429;
+  --primary-red-hover: #b30321;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body.dark-mode {
+  --background-color: #1A202C;      /* Void Black */
+  --text-primary: #F7FAFC;      /* Glacier Ice */
+  --text-secondary: #A0AEC0;
+  --surface-color: #2D3748;      /* Charcoal */
+  --border-color: #4A5568;
 }
 
-html,
+* { box-sizing: border-box; padding: 0; margin: 0; }
+html, body { max-width: 100vw; overflow-x: hidden; }
+
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  transition: background-color 0.2s, color 0.2s;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
 }

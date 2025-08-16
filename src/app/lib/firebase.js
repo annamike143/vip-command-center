@@ -1,22 +1,30 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+// --- src/lib/firebase.js (THE DEFINITIVE SECURE VERSION) ---
+import { initializeApp, getApps } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import { getAuth } from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getFunctions } from "firebase/functions";
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// This code now securely reads your keys from the .env.local file
 const firebaseConfig = {
-  apiKey: "AIzaSyBvG7DHwpAmLUKjB4SQ8YjIIpgeMUgV2rI",
-  authDomain: "smartbot-status-dashboard.firebaseapp.com",
-  databaseURL: "https://smartbot-status-dashboard-default-rtdb.firebaseio.com",
-  projectId: "smartbot-status-dashboard",
-  storageBucket: "smartbot-status-dashboard.firebasestorage.app",
-  messagingSenderId: "962499826914",
-  appId: "1:962499826914:web:2a3e66c7fd20dac4283abb",
-  measurementId: "G-DSDQLN7YJ0"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+let app;
+if (!getApps().length) {
+    app = initializeApp(firebaseConfig);
+} else {
+    app = getApps()[0];
+}
+
+// These export lines are the most important part
+export const database = getDatabase(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+export const functions = getFunctions(app);
