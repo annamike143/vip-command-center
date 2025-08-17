@@ -1,0 +1,61 @@
+/* --- src/app/views/CourseBuilder.css --- */
+.builder-container { padding: 0; } /* Padding is now on the main-content */
+.builder-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+.courses-list { display: flex; flex-direction: column; gap: 2rem; }
+.course-card { background-color: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; }
+.course-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; border-bottom: 1px solid var(--border-color); }
+.course-header h3 { margin: 0; }
+.course-header button, .module-header button { margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--surface-color); color: var(--text-primary); border-radius: 6px; cursor: pointer; }
+.remove-button { border-color: var(--primary-red); color: var(--primary-red); }
+
+/* Modal Styles */
+.modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 2000; padding: 1rem; }
+.modal-content { background: var(--surface-color); padding: 2rem; border-radius: 12px; width: 90%; max-width: 600px; border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; }
+.modal-content h2 { margin-top: 0; margin-bottom: 2rem; }
+.modal-content label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+.modal-content input, .modal-content textarea { width: 100%; padding: 0.75rem; margin-bottom: 1.5rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--background-color); color: var(--text-primary); font-size: 1rem; }
+.modal-content input:disabled { background-color: #eee; cursor: not-allowed; }
+.modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
+.modal-actions button { padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; background-color: var(--surface-color); color: var(--text-primary); }
+.modal-actions .submit-button { background-color: var(--primary-red); color: white; border-color: var(--primary-red); }
+/* --- New Nested List Styles --- */
+.modules-container {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+.module-item {
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+.module-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+.module-item-header h4 {
+    margin: 0;
+}
+.lessons-container {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.lesson-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    background-color: var(--surface-color);
+}
+.add-module-button, .add-lesson-button {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}

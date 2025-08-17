@@ -1,30 +1,51 @@
-// --- src/app/page.js (VIP Command Center Shell) ---
+// --- src/app/page.js (THE DEFINITIVE FINAL VERSION) ---
 'use client';
 
 import React, { useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from './lib/firebase';
-import Login from './components/Login';
-import './components/Login.css';
 
-// A placeholder for our main dashboard component
+// Import all components and views
+import Login from './components/Login';
+import VipManager from './views/VipManager';
+import CourseBuilder from './views/CourseBuilder';
+import MentorshipInbox from './views/MentorshipInbox';
+
+// Import all necessary stylesheets
+import './components/Login.css';
+import './views/VipManager.css';
+import './views/CourseBuilder.css';
+import './views/MentorshipInbox.css';
+
+// This is the main, fully-featured dashboard component
 const Dashboard = () => {
-    const handleSignOut = () => { signOut(auth); };
+    const [activeTab, setActiveTab] = useState('students'); // Default to Student Management
+
+    const handleSignOut = () => {
+        signOut(auth).catch(error => console.error("Sign out error", error));
+    };
 
     return (
-        <div>
-            <header style={{ display: 'flex', justifyContent: 'space-between', padding: '1rem 2rem', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--surface-color)' }}>
+        <div className="dashboard-shell">
+            <header className="dashboard-header">
                 <h1>Command Center</h1>
-                {/* The Dark Mode switcher will go here */}
-                <button onClick={handleSignOut} style={{ padding: '0.5rem 1rem', cursor: 'pointer' }}>Sign Out</button>
+                <button onClick={handleSignOut} className="signout-button">Sign Out</button>
             </header>
-            <div style={{ padding: '2rem' }}>
-                <p>The Course Builder, Student Manager, and Mentorship Inbox will go here.</p>
-            </div>
+            <nav className="main-nav">
+                <button className={activeTab === 'students' ? 'active' : ''} onClick={() => setActiveTab('students')}>Student Management</button>
+                <button className={activeTab === 'courses' ? 'active' : ''} onClick={() => setActiveTab('courses')}>Course Builder</button>
+                <button className={activeTab === 'inbox' ? 'active' : ''} onClick={() => setActiveTab('inbox')}>Mentorship Inbox</button>
+            </nav>
+            <main className="main-content">
+                {activeTab === 'students' && <VipManager />}
+                {activeTab === 'courses' && <CourseBuilder />}
+                {activeTab === 'inbox' && <MentorshipInbox />}
+            </main>
         </div>
-    )
-}
+    );
+};
 
+// This is the main page component that decides to show Login or Dashboard
 export default function HomePage() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
