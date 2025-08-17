@@ -12,6 +12,7 @@ const CourseBuilder = () => {
     const [loading, setLoading] = useState(true);
     const [modal, setModal] = useState({ type: null, data: null });
     const [formData, setFormData] = useState({});
+    const [thumbnailFile, setThumbnailFile] = useState(null);
     const [resourceFile, setResourceFile] = useState(null);
     const [resourceTitle, setResourceTitle] = useState('');
     const [uploading, setUploading] = useState(false);
@@ -33,6 +34,11 @@ const CourseBuilder = () => {
     };
     const closeModal = () => setModal({ type: null, data: null });
     const handleFormChange = (e) => {
+        const handleFileChange = (e) => {
+    if (e.target.files[0]) {
+        setThumbnailFile(e.target.files[0]);
+    }
+};
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     };
@@ -43,13 +49,29 @@ const CourseBuilder = () => {
         
         try {
             if (type === 'addCourse' || type === 'editCourse') {
-                const { courseId, title, order, isPublished, courseConciergeAssistantId } = formData;
-                if (!courseId || !title || !order) return alert("Please fill all required course fields.");
-                const path = type === 'addCourse' ? `courses/${courseId}` : `courses/${data.courseId}`;
-                await set(ref(database, path), {
-                    details: { title, order: parseInt(order, 10), isPublished: isPublished || false },
-                    courseConciergeAssistantId: courseConciergeAssistantId || '',
-                    modules: type === 'editCourse' ? data.modules : {}
+    const { courseId, title, order, isPublished, courseConciergeAssistantId, thumbnailUrl } = formData;
+    let finalThumbnailUrl = thumbnailUrl || ''; // Keep existing URL by default
+
+    // --- NEW UPLOAD LOGIC ---
+    if (thumbnailFile) {
+        const fileRef = storageRef(storage, `course-thumbnails/${courseId}/${thumbnailFile.name}`);
+        await uploadBytes(fileRef, thumbnailFile);
+        finalThumbnailUrl = await getDownloadURL(fileRef);
+        setThumbnailFile(null); // Clear the file after upload
+    }
+    // --- END NEW UPLOAD LOGIC ---
+
+    const path = type === 'addCourse' ? `courses/${courseId}` : `courses/${data.courseId}`;
+    
+    await set(ref(database, path), {
+        details: { 
+            title: title || '', 
+            order: parseInt(order, 10) || 0, 
+            isPublished: isPublished || false,
+            thumbnailUrl: finalThumbnailUrl // Save the new or existing URL
+        },
+        courseConciergeAssistantId: courseConciergeAssistantId || '',
+        modules: type === 'editCourse' ? data.modules : {}
                 });
             } else if (type === 'addModule' || type === 'editModule') {
                 const { moduleId, title, order } = formData;
@@ -189,6 +211,11 @@ const CourseBuilder = () => {
                                 <label>Course Title</label><input name="title" value={formData.title || ''} onChange={handleFormChange} required />
                                 <label>Order</label><input name="order" type="number" value={formData.order || ''} onChange={handleFormChange} required />
                                 <label>Course Concierge Assistant ID</label><input name="courseConciergeAssistantId" value={formData.courseConciergeAssistantId || ''} onChange={handleFormChange} placeholder="asst_..." />
+                                {/* ... after the courseConciergeAssistantId input ... */}
+<label>Course Thumbnail (Upload New)</label>
+<input name="thumbnail" type="file" onChange={handleFileChange} />
+{formData.thumbnailUrl && <img src={formData.thumbnailUrl} alt="Current Thumbnail" style={{width: '100px', marginTop: '10px'}} />}
+{/* ... the checkbox comes after this ... */}
                                 <div className="checkbox-wrapper"><input type="checkbox" name="isPublished" checked={formData.isPublished || false} onChange={handleFormChange} id="isPublished" /><label htmlFor="isPublished">Publish this course</label></div>
                             </>}
                             
