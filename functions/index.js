@@ -119,3 +119,75 @@ exports.unlockNextLesson = onCall({ cors: true }, async (request) => {
         return { success: true, message: "Congratulations! You have completed the entire course!" };
     }
 });
+// --- Add this new function to functions/index.js ---
+const OpenAI = require("openai");
+
+/**
+ * Securely interacts with the OpenAI Assistants API.
+ */
+exports.chatWithAssistant = onCall({
+    cors: true,
+    secrets: ["OPENAI_KEY"] // <-- RESTORE THIS LINE
+}, async (request) => {
+    if (!request.auth) {
+        throw new HttpsError("unauthenticated", "You must be logged in.");
+    }
+
+    const { assistantId, threadId, message, courseId, userId } = request.data;
+    if (!assistantId || !message) {
+        throw new HttpsError("invalid-argument", "Missing required information.");
+    }
+
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_KEY });
+    let currentThreadId = threadId;
+
+    try {
+        // 1. If no threadId is provided, create a new one.
+        if (!currentThreadId) {
+            const thread = await openai.beta.threads.create();
+            currentThreadId = thread.id;
+
+            // Save the new threadId to the user's profile for this course
+            const db = getDatabase();
+            await update(ref(db, `messagingThreads/${courseId}/${userId}`), {
+                assistantThreadId: currentThreadId
+            });
+        }
+
+        // 2. Add the user's message to the thread.
+        await openai.beta.threads.messages.create(currentThreadId, {
+            role: "user",
+            content: message,
+        });
+
+        // 3. Run the assistant.
+        const run = await openai.beta.threads.runs.create(currentThreadId, {
+            assistant_id: assistantId,
+        });
+
+        // 4. Wait for the run to complete.
+        let runStatus;
+        do {
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second
+            runStatus = await openai.beta.threads.runs.retrieve(currentThreadId, run.id);
+        } while (runStatus.status === "running" || runStatus.status === "in_progress" || runStatus.status === "queued");
+
+        if (runStatus.status !== "completed") {
+            throw new HttpsError("internal", "AI run failed with status: " + runStatus.status);
+        }
+
+        // 5. Retrieve the latest messages from the thread.
+        const messages = await openai.beta.threads.messages.list(currentThreadId);
+        const assistantResponse = messages.data.find(m => m.run_id === run.id && m.role === 'assistant');
+
+        if (assistantResponse && assistantResponse.content[0].type === 'text') {
+            return { success: true, response: assistantResponse.content[0].text.value, threadId: currentThreadId };
+        } else {
+            return { success: true, response: "I was unable to generate a response. Please try again.", threadId: currentThreadId };
+        }
+
+    } catch (error) {
+        console.error("Error with OpenAI Assistant:", error);
+        throw new HttpsError("internal", "An error occurred while communicating with the AI.");
+    }
+});
