@@ -225,7 +225,7 @@ const CourseBuilder = () => {
                                 <label>Course Concierge Assistant ID</label><input name="courseConciergeAssistantId" value={formData.courseConciergeAssistantId || ''} onChange={handleFormChange} placeholder="asst_..." />
                                 <label>Course Thumbnail (Upload New)</label><input name="thumbnail" type="file" onChange={handleThumbnailFileChange} />
                                 {formData.thumbnailUrl && <img src={formData.thumbnailUrl} alt="Current Thumbnail" style={{width: '100px', marginTop: '10px'}} />}
-                                {/* --- NEW, PERFECTED Course Lifecycle Controls --- */}
+                                {/* --- NEW, INTELLIGENT Course Lifecycle Controls --- */}
                                 <div className="course-lifecycle-controls">
                                     <div className="select-group">
                                         <label>Course Status</label>
@@ -235,16 +235,19 @@ const CourseBuilder = () => {
                                             <option value="Archived">Archived (Legacy)</option>
                                         </select>
                                     </div>
-                                    <div className="checkbox-group">
-                                        <input 
-                                            type="checkbox" 
-                                            name="comingSoon" 
-                                            checked={formData.comingSoon || false} 
-                                            onChange={handleFormChange} 
-                                            id="comingSoon" 
-                                        />
-                                        <label htmlFor="comingSoon">Display as "Coming Soon"</label>
-                                    </div>
+                                    {/* --- THIS IS THE CONDITIONAL LOGIC --- */}
+                                    {formData.status === 'Draft' && (
+                                        <div className="checkbox-group">
+                                            <input 
+                                                type="checkbox" 
+                                                name="comingSoon" 
+                                                checked={formData.comingSoon || false} 
+                                                onChange={handleFormChange} 
+                                                id="comingSoon" 
+                                            />
+                                            <label htmlFor="comingSoon">Display as "Coming Soon"</label>
+                                        </div>
+                                    )}
                                 </div>
                             </>}
                             
