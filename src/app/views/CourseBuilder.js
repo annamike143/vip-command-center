@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 // --- src/app/views/CourseBuilder.js (v3.2 - THE DEFINITIVE UNCOLLAPSED FINAL VERSION) ---
 'use client';
 
