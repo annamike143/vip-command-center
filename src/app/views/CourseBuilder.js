@@ -1,4 +1,4 @@
-// --- src/app/views/CourseBuilder.js (THE DEFINITIVE FINAL VERSION) ---
+// --- src/app/views/CourseBuilder.js (v3.2 - THE DEFINITIVE UNCOLLAPSED FINAL VERSION) ---
 'use client';
 
 import React, { useState, useEffect } from 'react';
@@ -29,67 +29,77 @@ const CourseBuilder = () => {
     const openModal = (type, data = {}) => {
         setModal({ type, data });
         setFormData(data.initialData || {});
+        setThumbnailFile(null);
         setResourceFile(null);
         setResourceTitle('');
     };
+    
     const closeModal = () => setModal({ type: null, data: null });
+
     const handleFormChange = (e) => {
-        const handleFileChange = (e) => {
-    if (e.target.files[0]) {
-        setThumbnailFile(e.target.files[0]);
-    }
-};
         const { name, value, type, checked } = e.target;
         setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
     };
-    
+
+    const handleThumbnailFileChange = (e) => {
+        if (e.target.files[0]) setThumbnailFile(e.target.files[0]);
+    };
+
+    const handleResourceFileChange = (e) => {
+        if (e.target.files[0]) setResourceFile(e.target.files[0]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const { type, data } = modal;
+        setUploading(true);
         
         try {
             if (type === 'addCourse' || type === 'editCourse') {
-    const { courseId, title, order, isPublished, courseConciergeAssistantId, thumbnailUrl } = formData;
-    let finalThumbnailUrl = thumbnailUrl || ''; // Keep existing URL by default
+                const { courseId, title, order, status, comingSoon, courseConciergeAssistantId, thumbnailUrl } = formData;
+                const finalCourseId = type === 'addCourse' ? courseId : data.courseId;
+                if (!finalCourseId) { alert("Course ID is required."); setUploading(false); return; }
+                
+                let finalThumbnailUrl = thumbnailUrl || '';
+                if (thumbnailFile) {
+                    setUploading(true);
+                    const fileRef = storageRef(storage, `course-thumbnails/${finalCourseId}/${thumbnailFile.name}`);
+                    await uploadBytes(fileRef, thumbnailFile);
+                    finalThumbnailUrl = await getDownloadURL(fileRef);
+                    setUploading(false);
+                }
 
-    // --- NEW UPLOAD LOGIC ---
-    if (thumbnailFile) {
-        const fileRef = storageRef(storage, `course-thumbnails/${courseId}/${thumbnailFile.name}`);
-        await uploadBytes(fileRef, thumbnailFile);
-        finalThumbnailUrl = await getDownloadURL(fileRef);
-        setThumbnailFile(null); // Clear the file after upload
-    }
-    // --- END NEW UPLOAD LOGIC ---
-
-    const path = type === 'addCourse' ? `courses/${courseId}` : `courses/${data.courseId}`;
-    
-    await set(ref(database, path), {
-        details: { 
-            title: title || '', 
-            order: parseInt(order, 10) || 0, 
-            isPublished: isPublished || false,
-            thumbnailUrl: finalThumbnailUrl // Save the new or existing URL
-        },
-        courseConciergeAssistantId: courseConciergeAssistantId || '',
-        modules: type === 'editCourse' ? data.modules : {}
+                const path = `courses/${finalCourseId}`;
+                const existingModules = data?.modules || {};
+                await set(ref(database, path), {
+                    details: { 
+                        title: title || '', 
+                        order: parseInt(order, 10) || 0, 
+                        status: status || 'Draft', // <-- THE UPGRADE
+                        comingSoon: comingSoon || false, // <-- THE UPGRADE
+                        thumbnailUrl: finalThumbnailUrl 
+                    },
+                    courseConciergeAssistantId: courseConciergeAssistantId || '',
+                    modules: existingModules
                 });
             } else if (type === 'addModule' || type === 'editModule') {
                 const { moduleId, title, order } = formData;
-                if (!moduleId || !title || !order) return alert("Please fill all required module fields.");
-                const path = type === 'addModule' ? `courses/${data.courseId}/modules/${moduleId}` : `courses/${data.courseId}/modules/${data.moduleId}`;
+                const finalModuleId = type === 'addModule' ? moduleId : data.moduleId;
+                const path = `courses/${data.courseId}/modules/${finalModuleId}`;
+                const existingLessons = data?.lessons || {};
                 await set(ref(database, path), {
-                    title, order: parseInt(order, 10),
-                    lessons: type === 'editModule' ? data.lessons : {}
+                    title: title, order: parseInt(order, 10), lessons: existingLessons
                 });
             } else if (type === 'addLesson' || type === 'editLesson') {
                 const { lessonId, title, description, order, videoEmbedCode, recitationAssistantId, unlockCode } = formData;
-                if (!lessonId || !title || !order || !unlockCode) return alert("Please fill all required lesson fields.");
-                const path = type === 'addLesson' ? `courses/${data.courseId}/modules/${data.moduleId}/lessons/${lessonId}` : `courses/${data.courseId}/modules/${data.moduleId}/lessons/${data.lessonId}`;
+                const finalLessonId = type === 'addLesson' ? lessonId : data.lessonId;
+                const path = `courses/${data.courseId}/modules/${data.moduleId}/lessons/${finalLessonId}`;
+                const existingResources = data?.resources || {};
                 await set(ref(database, path), {
-                    title: title || '', description: description || '', unlockCode: unlockCode || '',
-                    order: parseInt(order, 10) || 0, videoEmbedCode: videoEmbedCode || '',
+                    title, description, unlockCode, order: parseInt(order, 10),
+                    videoEmbedCode: videoEmbedCode || '',
                     recitationAssistantId: recitationAssistantId || '',
-                    resources: type === 'editLesson' ? data.resources : {}
+                    resources: existingResources
                 });
             }
             closeModal();
@@ -97,6 +107,7 @@ const CourseBuilder = () => {
             console.error("Error saving data:", error);
             alert(`An error occurred: ${error.message}`);
         }
+        setUploading(false);
     };
 
     const handleRemove = async (type, path) => {
@@ -104,8 +115,6 @@ const CourseBuilder = () => {
             await remove(ref(database, path));
         }
     };
-
-    const handleFileChange = (e) => { if (e.target.files[0]) setResourceFile(e.target.files[0]); };
 
     const handleAddResource = async () => {
         const { courseId, moduleId, lessonId } = modal.data;
@@ -115,9 +124,12 @@ const CourseBuilder = () => {
         await uploadBytes(fileRef, resourceFile);
         const downloadURL = await getDownloadURL(fileRef);
         const resourcesRef = ref(database, `courses/${courseId}/modules/${moduleId}/lessons/${lessonId}/resources`);
-        await push(resourcesRef, { title: resourceTitle, url: downloadURL });
+        const newResourceRef = push(resourcesRef); // Get a reference to the new location
+        await set(newResourceRef, { title: resourceTitle, url: downloadURL });
+        
         // Manually update the form data to show the new resource instantly
-        const newResources = { ...formData.resources, [Date.now()]: { title: resourceTitle, url: downloadURL } };
+        const newResource = { [newResourceRef.key]: { title: resourceTitle, url: downloadURL } };
+        const newResources = { ...formData.resources, ...newResource };
         setFormData(prev => ({ ...prev, resources: newResources }));
         setResourceFile(null);
         setResourceTitle('');
@@ -128,7 +140,6 @@ const CourseBuilder = () => {
         const { courseId, moduleId, lessonId } = modal.data;
         if (window.confirm("Delete this resource?")) {
             await remove(ref(database, `courses/${courseId}/modules/${moduleId}/lessons/${lessonId}/resources/${resourceId}`));
-            // Manually update the form data to remove the resource instantly
             const updatedResources = { ...formData.resources };
             delete updatedResources[resourceId];
             setFormData(prev => ({ ...prev, resources: updatedResources }));
@@ -211,12 +222,29 @@ const CourseBuilder = () => {
                                 <label>Course Title</label><input name="title" value={formData.title || ''} onChange={handleFormChange} required />
                                 <label>Order</label><input name="order" type="number" value={formData.order || ''} onChange={handleFormChange} required />
                                 <label>Course Concierge Assistant ID</label><input name="courseConciergeAssistantId" value={formData.courseConciergeAssistantId || ''} onChange={handleFormChange} placeholder="asst_..." />
-                                {/* ... after the courseConciergeAssistantId input ... */}
-<label>Course Thumbnail (Upload New)</label>
-<input name="thumbnail" type="file" onChange={handleFileChange} />
-{formData.thumbnailUrl && <img src={formData.thumbnailUrl} alt="Current Thumbnail" style={{width: '100px', marginTop: '10px'}} />}
-{/* ... the checkbox comes after this ... */}
-                                <div className="checkbox-wrapper"><input type="checkbox" name="isPublished" checked={formData.isPublished || false} onChange={handleFormChange} id="isPublished" /><label htmlFor="isPublished">Publish this course</label></div>
+                                <label>Course Thumbnail (Upload New)</label><input name="thumbnail" type="file" onChange={handleThumbnailFileChange} />
+                                {formData.thumbnailUrl && <img src={formData.thumbnailUrl} alt="Current Thumbnail" style={{width: '100px', marginTop: '10px'}} />}
+                                {/* --- NEW, PERFECTED Course Lifecycle Controls --- */}
+                                <div className="course-lifecycle-controls">
+                                    <div className="select-group">
+                                        <label>Course Status</label>
+                                        <select name="status" value={formData.status || 'Draft'} onChange={handleFormChange}>
+                                            <option value="Draft">Draft (Hidden)</option>
+                                            <option value="Published">Published (Live)</option>
+                                            <option value="Archived">Archived (Legacy)</option>
+                                        </select>
+                                    </div>
+                                    <div className="checkbox-group">
+                                        <input 
+                                            type="checkbox" 
+                                            name="comingSoon" 
+                                            checked={formData.comingSoon || false} 
+                                            onChange={handleFormChange} 
+                                            id="comingSoon" 
+                                        />
+                                        <label htmlFor="comingSoon">Display as "Coming Soon"</label>
+                                    </div>
+                                </div>
                             </>}
                             
                             {/* Fields for Module */}
@@ -239,7 +267,9 @@ const CourseBuilder = () => {
                             
                             <div className="modal-actions">
                                 <button type="button" onClick={closeModal}>Cancel</button>
-                                <button type="submit" className="submit-button">Save Changes</button>
+                                <button type="submit" className="submit-button" disabled={uploading}>
+                                    {uploading ? 'Uploading...' : 'Save Changes'}
+                                </button>
                             </div>
                         </form>
 
@@ -256,7 +286,7 @@ const CourseBuilder = () => {
                                 </div>
                                 <div className="add-resource-form">
                                     <input type="text" value={resourceTitle} onChange={(e) => setResourceTitle(e.target.value)} placeholder="Resource Title" />
-                                    <input type="file" onChange={handleFileChange} />
+                                    <input type="file" onChange={handleResourceFileChange} />
                                     <button type="button" onClick={handleAddResource} disabled={uploading}>{uploading ? 'Uploading...' : '+ Add'}</button>
                                 </div>
                             </div>

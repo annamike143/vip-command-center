@@ -5,6 +5,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { ref, onValue, push, serverTimestamp, update } from 'firebase/database';
 import { database } from '../lib/firebase';
 import './MentorshipInbox.css';
+import SwipeTabs from '../components/SwipeTabs';
 
 const MentorshipInbox = () => {
     const [threads, setThreads] = useState({});
@@ -80,59 +81,60 @@ const MentorshipInbox = () => {
 
     if (loading) return <div>Loading Inbox...</div>;
 
-    return (
-        <div className="inbox-container">
-            <div className="thread-list-panel">
-                <div className="panel-header"><h2>Inbox Threads</h2></div>
-                <div className="threads">
-                    {threadList.length > 0 ? threadList.map(({ courseId, userId }) => (
-                        <div 
-                            key={`${courseId}-${userId}`} 
-                            className={`thread-item ${selectedThreadKey === `${courseId}___${userId}` ? 'active' : ''}`}
-                            onClick={() => setSelectedThreadKey(`${courseId}___${userId}`)}
-                        >
-                            <div className="thread-user">{users[userId]?.profile?.name || 'Unknown User'}</div>
-                            <div className="thread-lesson">{courses[courseId]?.details?.title || 'Unknown Course'}</div>
+            return (
+                <SwipeTabs tabs={["Threads", "Messages"]}>
+                    {/* Tab 1: Thread List */}
+                    <div className="thread-list-panel">
+                        <div className="panel-header"><h2>Inbox Threads</h2></div>
+                        <div className="threads">
+                            {threadList.length > 0 ? threadList.map(({ courseId, userId }) => (
+                                <div
+                                    key={`${courseId}-${userId}`}
+                                    className={`thread-item ${selectedThreadKey === `${courseId}___${userId}` ? 'active' : ''}`}
+                                    onClick={() => setSelectedThreadKey(`${courseId}___${userId}`)}
+                                >
+                                    <div className="thread-user">{users[userId]?.profile?.name || 'Unknown User'}</div>
+                                    <div className="thread-lesson">{courses[courseId]?.details?.title || 'Unknown Course'}</div>
+                                </div>
+                            )) : <div className="empty-threads">No messages yet.</div>}
                         </div>
-                    )) : <div className="empty-threads">No messages yet.</div>}
-                </div>
-            </div>
-
-            <div className="message-view-panel">
-                {selectedThread ? (
-                    <>
-                        <div className="panel-header">
-                            <h3>{courses[selectedThread.courseId]?.details?.title}</h3>
-                            <p>Conversation with {users[selectedThread.userId]?.profile?.name}</p>
-                            <div className="ai-toggle">
-                                <span>AI Status: <strong>{selectedThread.aiStatus || 'active'}</strong></span>
-                                <button onClick={() => handleAiToggle('paused')} disabled={selectedThread.aiStatus === 'paused'}>Take Over</button>
-                                <button onClick={() => handleAiToggle('active')} disabled={selectedThread.aiStatus !== 'paused'}>Handover to AI</button>
-                            </div>
-                        </div>
-                        <div className="messages-area">
-                            {selectedThread.messages && Object.keys(selectedThread.messages).map(msgId => {
-                                const msg = selectedThread.messages[msgId];
-                                return (
-                                    <div key={msgId} className={`message-bubble ${msg.sender}`}>
-                                        {msg.sender === 'assistant' && <span className="sender-label">AI Concierge</span>}
-                                        {msg.text}
+                    </div>
+                    {/* Tab 2: Message View */}
+                    <div className="message-view-panel">
+                        {selectedThread ? (
+                            <>
+                                <div className="panel-header">
+                                    <h3>{courses[selectedThread.courseId]?.details?.title}</h3>
+                                    <p>Conversation with {users[selectedThread.userId]?.profile?.name}</p>
+                                    <div className="ai-toggle">
+                                        <span>AI Status: <strong>{selectedThread.aiStatus || 'active'}</strong></span>
+                                        <button onClick={() => handleAiToggle('paused')} disabled={selectedThread.aiStatus === 'paused'}>Take Over</button>
+                                        <button onClick={() => handleAiToggle('active')} disabled={selectedThread.aiStatus !== 'paused'}>Handover to AI</button>
                                     </div>
-                                )
-                            })}
-                            <div ref={messagesEndRef} />
-                        </div>
-                        <form className="reply-form" onSubmit={handleSendReply}>
-                            <input type="text" value={replyText} onChange={(e) => setReplyText(e.target.value)} placeholder="Type your reply as the Mentor..." />
-                            <button type="submit">Send</button>
-                        </form>
-                    </>
-                ) : (
-                    <div className="no-thread-selected"><p>Select a thread to view the conversation.</p></div>
-                )}
-            </div>
-        </div>
-    );
+                                </div>
+                                <div className="messages-area">
+                                    {selectedThread.messages && Object.keys(selectedThread.messages).map(msgId => {
+                                        const msg = selectedThread.messages[msgId];
+                                        return (
+                                            <div key={msgId} className={`message-bubble ${msg.sender}`}>
+                                                {msg.sender === 'assistant' && <span className="sender-label">AI Concierge</span>}
+                                                {msg.text}
+                                            </div>
+                                        )
+                                    })}
+                                    <div ref={messagesEndRef} />
+                                </div>
+                                <form className="reply-form" onSubmit={handleSendReply}>
+                                    <input type="text" value={replyText} onChange={(e) => setReplyText(e.target.value)} placeholder="Type your reply as the Mentor..." />
+                                    <button type="submit">Send</button>
+                                </form>
+                            </>
+                        ) : (
+                            <div className="no-thread-selected"><p>Select a thread to view the conversation.</p></div>
+                        )}
+                    </div>
+                </SwipeTabs>
+            );
 };
 
 export default MentorshipInbox;

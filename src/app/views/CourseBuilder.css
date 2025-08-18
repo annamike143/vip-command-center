@@ -30,3 +30,43 @@
 .resource-item { display: flex; justify-content: space-between; align-items: center; background-color: var(--background-color); padding: 0.75rem; border-radius: 6px; }
 .add-resource-form { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 1rem; align-items: center; }
 .add-resource-form button { height: 100%; }
+/* --- NEW: Course Lifecycle Control Styles --- */
+.course-lifecycle-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.select-group label, .checkbox-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.select-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 1.75rem; /* Aligns with the select label */
+}
+.checkbox-group input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+.checkbox-group label {
+    margin-bottom: 0;
+}
