@@ -3,11 +3,8 @@
   "alias": ["admin.courses.themikesalazar.com", "admin.mikesalazaracademy.com"],
   "regions": ["iad1"],
   "functions": {
-    "src/app/api/**/*.js": {
+    "src/app/api/**/route.js": {
       "maxDuration": 30
-    },
-    "functions/**/*.js": {
-      "maxDuration": 60
     }
   },
   "headers": [
