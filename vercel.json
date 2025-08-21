@@ -1,34 +1,7 @@
 {
   "version": 2,
-  "name": "vip-command-center",
   "alias": ["admin.courses.themikesalazar.com", "admin.mikesalazaracademy.com"],
   "regions": ["iad1"],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/next"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
-  "env": {
-    "NODE_ENV": "production",
-    "NEXT_PUBLIC_ENVIRONMENT": "production",
-    "NEXT_PUBLIC_BASE_URL": "https://admin.courses.themikesalazar.com"
-  },
-  "build": {
-    "env": {
-      "NEXT_TELEMETRY_DISABLED": "1"
-    }
-  },
   "functions": {
     "src/app/api/**/*.js": {
       "maxDuration": 30
