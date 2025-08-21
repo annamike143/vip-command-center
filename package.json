@@ -16,20 +16,21 @@
     "cache:clear": "rimraf .next"
   },
   "dependencies": {
+    "critters": "^0.0.23",
+    "firebase": "^12.1.0",
+    "next": "^14.2.15",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "next": "^14.2.15",
-    "firebase": "^12.1.0",
     "react-swipeable": "^7.0.2"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "eslint-config-next": "14.2.15",
     "@next/bundle-analyzer": "^14.2.15",
     "cross-env": "^7.0.3",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.15",
     "lighthouse": "^11.7.1",
-    "webpack-bundle-analyzer": "^4.10.1",
-    "sharp": "^0.33.4"
+    "sharp": "^0.33.4",
+    "webpack-bundle-analyzer": "^4.10.1"
   },
   "engines": {
     "node": ">=18.0.0",
