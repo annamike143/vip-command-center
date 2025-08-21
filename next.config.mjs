@@ -152,14 +152,6 @@ const nextConfig = {
         scrollRestoration: true,
         optimizeCss: true,
         optimizePackageImports: ['react-swipeable'],
-        turbo: {
-            rules: {
-                '*.svg': {
-                    loaders: ['@svgr/webpack'],
-                    as: '*.js',
-                },
-            },
-        },
     },
 
     // Compiler optimizations
@@ -167,14 +159,6 @@ const nextConfig = {
         removeConsole: process.env.NODE_ENV === 'production',
         reactRemoveProperties: process.env.NODE_ENV === 'production',
     },
-    
-    // Output configuration for different deployment targets
-    output: 'standalone',
-    
-    // Environment variables validation
-    env: {
-        CUSTOM_KEY: process.env.CUSTOM_KEY,
-    }
 };
 
 export default nextConfig;
