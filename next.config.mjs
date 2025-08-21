@@ -18,7 +18,6 @@ const nextConfig = {
     
     // Performance optimizations
     optimizeFonts: true,
-    optimizeImages: true,
     
     // Security headers
     async headers() {
