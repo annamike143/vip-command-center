@@ -13,7 +13,7 @@
     "performance:audit": "lighthouse http://localhost:3001 --output=json --output-path=./performance/audit.json --chrome-flags=\"--headless\"",
     "performance:test": "npm run build && npm run start & npm run performance:audit",
     "bundle:analyze": "npm run build && npx @next/bundle-analyzer",
-    "cache:clear": "if exist .next (rmdir /s /q .next)",
+    "cache:clear": "rimraf .next",
     "prebuild": "npm run cache:clear"
   },
   "dependencies": {
