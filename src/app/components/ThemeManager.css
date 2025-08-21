@@ -1,0 +1,282 @@
+/* --- vip-command-center/src/app/components/ThemeManager.css --- */
+/* SmartBot Theme Manager - 100% Semantic Colors - NO FALLBACKS */
+
+.theme-manager-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-overlay-backdrop);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+}
+
+.theme-manager {
+    background: var(--color-surface-card);
+    border-radius: 16px;
+    width: 90vw;
+    max-width: 800px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-premium);
+    overflow: hidden;
+    border: 1px solid var(--color-border-primary);
+}
+
+.manager-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--color-border-primary);
+    background: var(--color-surface-elevated);
+}
+
+.manager-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-headline);
+    font-family: var(--font-heading);
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: var(--color-surface-interactive);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+    background: var(--color-action-primary);
+    color: var(--color-text-inverse);
+    transform: scale(1.05);
+}
+
+.manager-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--color-border-primary);
+    background: var(--color-surface-elevated);
+}
+
+.tab {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.tab:hover {
+    background: var(--color-surface-hover);
+    color: var(--color-text-primary);
+}
+
+.tab.active {
+    color: var(--color-action-primary);
+    background: var(--color-surface-card);
+    border-bottom-color: var(--color-action-primary);
+    box-shadow: var(--shadow-card);
+}
+
+.manager-content {
+    padding: 2rem;
+    background: var(--color-surface-card);
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.color-card {
+    background: var(--color-surface-card);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: var(--shadow-card);
+    border: 4px solid var(--color-border-primary);
+    border-top: 4px solid var(--color-action-primary);
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.color-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-premium);
+}
+
+.color-preview {
+    width: 100%;
+    height: 60px;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    box-shadow: var(--shadow-button);
+}
+
+.color-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--color-text-secondary);
+}
+
+.color-value {
+    font-size: 0.75rem;
+    font-family: 'Monaco', 'Consolas', monospace;
+    color: var(--color-text-primary);
+    background: var(--color-surface-elevated);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.color-description {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.manager-footer {
+    padding: 1.5rem 2rem;
+    background: var(--color-surface-elevated);
+    border-top: 1px solid var(--color-border-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.footer-info {
+    font-size: 0.85rem;
+    color: var(--color-text-primary);
+    margin: 0;
+}
+
+.footer-actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.theme-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--color-action-primary);
+    color: var(--color-text-inverse);
+}
+
+.theme-btn:hover {
+    background: var(--color-action-primary-hover);
+    transform: translateY(-1px);
+}
+
+.theme-btn.secondary {
+    background: var(--color-action-secondary);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-primary);
+}
+
+.theme-btn.secondary:hover {
+    background: var(--color-surface-hover);
+}
+
+/* 🎯 THEME OPTION CARDS */
+.theme-option {
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border-primary);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.theme-option:hover {
+    background: var(--color-surface-hover);
+    border-color: var(--color-action-primary);
+    transform: translateY(-1px);
+}
+
+.theme-option.active {
+    background: var(--color-surface-card);
+    border-color: var(--color-action-primary);
+    box-shadow: var(--shadow-premium);
+}
+
+.theme-preview {
+    width: 60px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--color-gradient-primary);
+    box-shadow: var(--shadow-button);
+}
+
+.theme-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: var(--color-text-headline);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.theme-info p {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+}
+
+/* 🔧 RESPONSIVE DESIGN */
+@media (max-width: 640px) {
+    .theme-manager {
+        width: 95vw;
+        margin: 1rem;
+    }
+    
+    .manager-header,
+    .manager-content,
+    .manager-footer {
+        padding: 1rem;
+    }
+    
+    .color-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+}

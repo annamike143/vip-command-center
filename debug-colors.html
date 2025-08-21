@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug CSS Variables</title>
+</head>
+<body>
+    <script>
+        // Check what CSS variables are actually set
+        const root = document.documentElement;
+        const styles = getComputedStyle(root);
+        
+        console.log('=== CSS VARIABLES GENERATED ===');
+        
+        // Get all CSS variables
+        for (let i = 0; i < styles.length; i++) {
+            const prop = styles[i];
+            if (prop.startsWith('--')) {
+                console.log(`${prop}: ${styles.getPropertyValue(prop)}`);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "rules": {
+    "users": {
+      "$userId": {
+        ".read": "$userId === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+        ".write": "$userId === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+        "profile": {
+          ".validate": "newData.hasChildren(['firstName', 'lastName', 'email'])"
+        },
+        "enrollments": {
+          "$courseId": {
+            ".read": "$userId === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+            ".write": "root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+            "progress": {
+              ".read": "$userId === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+              ".write": "$userId === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+            }
+          }
+        }
+      }
+    },
+    "courses": {
+      ".read": "auth != null",
+      "$courseId": {
+        ".write": "root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+        "details": {
+          ".validate": "newData.hasChildren(['title', 'description', 'status'])"
+        },
+        "modules": {
+          "$moduleId": {
+            "lessons": {
+              "$lessonId": {
+                ".validate": "newData.hasChildren(['title', 'content', 'order'])"
+              }
+            }
+          }
+        }
+      }
+    },
+    "mentorshipInbox": {
+      ".read": "root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".write": "auth != null",
+      "$messageId": {
+        ".validate": "newData.hasChildren(['userId', 'message', 'timestamp'])"
+      }
+    },
+    "supportChat": {
+      "$chatId": {
+        ".read": "data.child('userId').val() === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+        ".write": "data.child('userId').val() === auth.uid || root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'"
+      }
+    },
+    "analytics": {
+      ".read": "root.child('users').child(auth.uid).child('profile').child('role').val() === 'admin'",
+      ".write": "auth != null"
+    }
+  }
+}

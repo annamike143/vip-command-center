@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { ref, onValue, set, remove, push } from 'firebase/database';
 import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { database, storage } from '../lib/firebase';
+import ThemeManager from '../components/ThemeManager';
 import './CourseBuilder.css';
 
 const CourseBuilder = () => {
@@ -92,7 +93,7 @@ const CourseBuilder = () => {
                     title: title, order: parseInt(order, 10), lessons: existingLessons
                 });
             } else if (type === 'addLesson' || type === 'editLesson') {
-                const { lessonId, title, description, order, videoEmbedCode, recitationAssistantId, unlockCode } = formData;
+                const { lessonId, title, description, order, videoEmbedCode, recitationAssistantId, unlockCode, instructorMessage } = formData;
                 const finalLessonId = type === 'addLesson' ? lessonId : data.lessonId;
                 const path = `courses/${data.courseId}/modules/${data.moduleId}/lessons/${finalLessonId}`;
                 const existingResources = data?.resources || {};
@@ -100,6 +101,7 @@ const CourseBuilder = () => {
                     title, description, unlockCode, order: parseInt(order, 10),
                     videoEmbedCode: videoEmbedCode || '',
                     recitationAssistantId: recitationAssistantId || '',
+                    instructorMessage: instructorMessage || '',
                     resources: existingResources
                 });
             }
@@ -160,10 +162,22 @@ const CourseBuilder = () => {
                 {Object.keys(courses).sort((a,b) => courses[a].details.order - courses[b].details.order).map(courseId => {
                     const course = courses[courseId];
                     return (
-                        <div key={courseId} className="course-card">
+                        <div key={courseId} className="course-card" style={{position: 'relative'}}>
+                            {/* 🏆 STRATEGIC GOLD PREMIUM INDICATORS */}
+                            {(courseId.includes('premium') || course.details.title.toLowerCase().includes('premium') || course.details.title.toLowerCase().includes('advanced')) && (
+                                <div className="premium-badge">
+                                    ⭐ PREMIUM
+                                </div>
+                            )}
+                            {Object.keys(course.modules || {}).length > 8 && (
+                                <div className="high-demand-indicator" style={{top: '3.5rem'}}>
+                                    🔥 HIGH DEMAND
+                                </div>
+                            )}
                             <div className="course-header">
                                 <h3>{course.details.order}. {course.details.title}</h3>
                                 <div>
+                                    <button onClick={() => openModal('themeManager', { courseId })}>Theme & Branding</button>
                                     <button onClick={() => openModal('editCourse', { courseId, modules: course.modules, initialData: { ...course.details, courseConciergeAssistantId: course.courseConciergeAssistantId, courseId: courseId } })}>Edit Course</button>
                                     <button onClick={() => handleRemove('course', `courses/${courseId}`)} className="remove-button">Delete</button>
                                     <button onClick={() => openModal('addModule', { courseId })} className="add-module-button">+ Add Module</button>
@@ -205,7 +219,7 @@ const CourseBuilder = () => {
                 })}
             </div>
 
-            {modal.type && (
+            {modal.type && modal.type !== 'themeManager' && (
                 <div className="modal-backdrop">
                     <div className="modal-content">
                         <h2>
@@ -266,6 +280,18 @@ const CourseBuilder = () => {
                                 <label>Order</label><input name="order" type="number" value={formData.order || ''} onChange={handleFormChange} required />
                                 <label>Groove Video Embed Code</label><textarea name="videoEmbedCode" value={formData.videoEmbedCode || ''} onChange={handleFormChange} />
                                 <label>Lesson Coach Assistant ID</label><input name="recitationAssistantId" value={formData.recitationAssistantId || ''} onChange={handleFormChange} placeholder="asst_..." />
+                                <label>Instructor Welcome Message (Lesson-Specific Popup)</label>
+                                <textarea 
+                                    name="instructorMessage" 
+                                    value={formData.instructorMessage || ''} 
+                                    onChange={handleFormChange} 
+                                    placeholder="Enter a personalized welcome message for this specific lesson. Use variables: {firstName}, {lastName}, {fullName}, {email}. Example: 'Hello {firstName}, welcome to this lesson!'"
+                                    rows="4"
+                                    style={{ minHeight: '100px', resize: 'vertical' }}
+                                />
+                                <small style={{ color: '#6b7280', fontSize: '0.875rem', display: 'block', marginTop: '0.25rem' }}>
+                                    💡 Pro tip: Use {'{firstName}'} for personal touch, {'{fullName}'} for formal address
+                                </small>
                                 <label>Unlock Code</label><input name="unlockCode" value={formData.unlockCode || ''} onChange={handleFormChange} required />
                             </>}
                             
@@ -297,6 +323,13 @@ const CourseBuilder = () => {
                         )}
                     </div>
                 </div>
+            )}
+
+            {modal.type === 'themeManager' && (
+                <ThemeManager
+                    courseId={modal.data.courseId}
+                    onClose={closeModal}
+                />
             )}
         </div>
     );

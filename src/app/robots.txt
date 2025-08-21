@@ -1,0 +1,23 @@
+User-agent: *
+Disallow: /
+
+# Admin portal should not be indexed
+# This is a private administrative interface
+# Access is restricted to authorized personnel only
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: Bingbot
+Disallow: /
+
+User-agent: *
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Disallow: /components/
+Disallow: /views/
+Disallow: /analytics/
+Disallow: /management/
+
+# No sitemap for admin interface

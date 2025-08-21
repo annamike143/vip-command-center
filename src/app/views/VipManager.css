@@ -1,94 +1,170 @@
-/* --- src/app/views/VipManager.css --- */
-.manager-container { padding: 2rem; }
-.manager-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-.add-button { background-color: var(--primary-red); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 700; cursor: pointer; font-family: 'Poppins', sans-serif; transition: background-color 0.2s; }
-.add-button:hover { background-color: var(--primary-red-hover); }
-.manager-table-wrapper { width: 100%; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
-table { width: 100%; border-collapse: collapse; }
-th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border-color); }
-th { background-color: var(--background-color); }
-tr:last-child td { border-bottom: none; }
-.action-button { padding: 0.5rem 1rem; border: 1px solid var(--border-color); background: var(--surface-color); color: var(--text-primary); border-radius: 6px; cursor: pointer; margin-right: 0.5rem; }
-.modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 2000; }
-.modal-content { background: var(--surface-color); padding: 2rem; border-radius: 12px; width: 90%; max-width: 500px; border: 1px solid var(--border-color); }
-.modal-content h2 { margin-top: 0; margin-bottom: 0.5rem; }
-.modal-content p { margin-bottom: 1.5rem; color: var(--text-secondary); }
-.modal-content input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--background-color); color: var(--text-primary); }
-.modal-actions { display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1rem; }
-.modal-actions button { padding: 0.75rem 1.5rem; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; background-color: var(--surface-color); color: var(--text-primary); }
-.modal-actions .submit-button { background-color: var(--primary-red); color: white; border-color: var(--primary-red); }
-.modal-content .error-message { color: var(--primary-red); margin-top: -0.5rem; }
-/* --- New Manage Progress Modal Styles --- */
-.enrollments-list {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-.course-progress-item {
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-}
-.course-progress-item h3 {
-    padding: 1rem;
-    margin: 0;
-    background-color: var(--background-color);
-    border-bottom: 1px solid var(--border-color);
-}
-.lessons-progress-list {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.lesson-progress-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.checkbox-group {
-    display: flex;
-    gap: 1rem;
-}
-.checkbox-group label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
-}
-/* --- New Enrollment Manager Styles --- */
-.enroll-section {
-    margin-top: 1rem;
-    padding-bottom: 2rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 2rem;
-}
-.enroll-section h3 {
-    margin-bottom: 1rem;
-}
-.enroll-form {
-    display: flex;
-    gap: 1rem;
-}
-.enroll-form select {
-    flex-grow: 1;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-}
-.enroll-form button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 0 1.5rem;
-    border-radius: 6px;
-    cursor: pointer;
-}
-.enroll-form button:disabled {
-    background-color: #aaa;
-    cursor: not-allowed;
+/* VipManager.css - 100% Semantic Implementation */
+
+.vip-manager {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background: var(--color-surface-primary);
+    min-height: 100vh;
+    color: var(--color-text-primary);
+    font-family: var(--color-font-body);
 }
 
-.enrollments-list h4 {
+.vip-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: var(--color-surface-glass);
+    border-radius: 20px;
+    box-shadow: var(--color-shadow-glass);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-accent);
+}
+
+.vip-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-text-headline);
+    margin-bottom: 0.5rem;
+    font-family: var(--color-font-heading);
+}
+
+.vip-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.125rem;
     margin-bottom: 1rem;
+}
+
+.premium-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.feature-card {
+    background: var(--color-surface-card);
+    border: 2px solid var(--color-border-primary);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--color-shadow-card);
+}
+
+.feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--color-shadow-hover);
+    border-color: var(--color-border-accent);
+}
+
+.feature-card.premium {
+    border-color: var(--color-accent-premium);
+    background: var(--color-gradient-subtle);
+    box-shadow: var(--color-shadow-premium);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-text-headline);
+    margin-bottom: 0.5rem;
+    font-family: var(--color-font-heading);
+}
+
+.feature-description {
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.vip-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.vip-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--color-shadow-button);
+}
+
+.btn-primary {
+    background: var(--color-action-primary);
+    color: var(--color-text-inverse);
+}
+
+.btn-secondary {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-border-primary);
+}
+
+.btn-premium {
+    background: var(--color-gradient-accent);
+    color: var(--color-text-primary);
+    border: 2px solid var(--color-accent-premium);
+}
+
+.vip-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--color-shadow-hover);
+}
+
+.vip-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.stat-card {
+    background: var(--color-surface-card);
+    padding: 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 1px solid var(--color-border-primary);
+    box-shadow: var(--color-shadow-card);
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    font-family: var(--color-font-heading);
+}
+
+.stat-label {
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .vip-manager {
+        padding: 1rem;
+    }
+    
+    .vip-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .vip-btn {
+        width: 100%;
+        max-width: 300px;
+    }
 }

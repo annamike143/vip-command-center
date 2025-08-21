@@ -1,15 +1,78 @@
-/* --- src/app/globals.css (Success Cockpit Theme) --- */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500&display=swap');
+/* --- src/app/globals.css (SmartBot Strategic Color System) --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* Light Mode (Default) */
-  --background-color: #F7FAFC; /* Glacier Ice */
-  --text-primary: #2D3748;      /* Charcoal */
-  --text-secondary: #718096;    /* Slate Gray */
-  --surface-color: #FFFFFF;      /* Summit White */
-  --border-color: #E2E8F0;
-  --primary-red: #D90429;
-  --primary-red-hover: #b30321;
+  /* SmartBot Strategic Colors - Following Design Guidelines */
+  --theme-primary-blue: #00A9E0;           /* Buttons, links, key icons */
+  --theme-accent-gold: #FFD700;            /* Scarcity numbers, Partner status */
+  --theme-dark-navy: #001F3F;              /* Headlines, important text */
+  --theme-supporting-gray: #6A737D;        /* Body text, secondary text */
+  --theme-background-gray: #F5F5F7;        /* Main page background */
+  --theme-surface-white: #FFFFFF;          /* Content cards, modals */
+  --theme-border-color: #E1E4E8;           /* Borders, dividers */
+  
+  /* Surface System (Clean & Light) */
+  --theme-surface-card: #FFFFFF;
+  --theme-surface-elevated: #FAFBFC;
+  --theme-surface-glass: rgba(255, 255, 255, 0.95);
+  --theme-surface-hover: rgba(0, 169, 224, 0.05);
+  
+  /* Text Hierarchy */
+  --theme-text-primary: #001F3F;           /* Headlines */
+  --theme-text-secondary: #6A737D;         /* Body text */
+  --theme-text-tertiary: #9CA3AF;          /* Captions */
+  --theme-text-accent: #00A9E0;            /* Links */
+  --theme-text-inverse: #FFFFFF;           /* On dark backgrounds */
+  
+  /* Button System */
+  --theme-button-primary: #00A9E0;
+  --theme-button-primary-hover: #0088CC;
+  --theme-button-secondary: #F8FAFC;
+  --theme-button-secondary-border: #E1E4E8;
+  --theme-button-secondary-text: #6A737D;
+  
+  /* Accent System (Gold for special cases) */
+  --theme-accent-primary: #FFD700;
+  --theme-accent-secondary: #FFF4E6;
+  --theme-accent-border: #FFE5B3;
+  
+  /* Strategic Gradients (Minimal Usage) */
+  --theme-gradient-primary: linear-gradient(135deg, #00A9E0 0%, #0088CC 100%);
+  --theme-gradient-accent: linear-gradient(135deg, #FFD700 0%, #FFC700 100%);
+  
+  /* Professional Shadows */
+  --theme-shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --theme-shadow-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --theme-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --theme-shadow-button: 0 2px 8px rgba(0, 169, 224, 0.15);
+  --theme-shadow-accent: 0 2px 8px rgba(255, 215, 0, 0.25);
+  
+  /* Semantic Colors */
+  --theme-success: #059669;
+  --theme-success-bg: #ECFDF5;
+  --theme-success-border: #A7F3D0;
+  --theme-warning: #D97706;
+  --theme-warning-bg: #FFFBEB;
+  --theme-warning-border: #FED7AA;
+  --theme-error: #DC2626;
+  --theme-error-bg: #FEF2F2;
+  --theme-error-border: #FECACA;
+  --theme-info: #00A9E0;
+  --theme-info-bg: #F0F9FF;
+  --theme-info-border: #BAE6FD;
+  
+  /* Typography */
+  --theme-font-family-heading: 'Poppins', sans-serif;
+  --theme-font-family-body: 'Inter', sans-serif;
+  
+  /* Legacy Compatibility (Updated to match strategy) */
+  --background-color: #F5F5F7;
+  --text-primary: #001F3F;
+  --text-secondary: #6A737D;
+  --surface-color: #FFFFFF;
+  --border-color: #E1E4E8;
+  --primary-red: #00A9E0;  /* Mapped to primary blue */
+  --primary-red-hover: #0088CC;
 }
 
 body.dark-mode {
@@ -24,54 +87,129 @@ body.dark-mode {
 html, body { max-width: 100vw; overflow-x: hidden; }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-primary);
-  transition: background-color 0.2s, color 0.2s;
+  font-family: var(--theme-font-family-body, 'Inter', sans-serif);
+  background: var(--theme-background-gray, #F5F5F7);
+  color: var(--theme-text-primary, #001F3F);
+  transition: all 0.3s ease;
+  min-height: 100vh;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
+  font-family: var(--theme-font-family-heading, 'Poppins', sans-serif);
   font-weight: 700;
+  color: var(--theme-text-primary, #001F3F);
 }
-/* --- New Dashboard Shell & Nav Styles --- */
+
+/* --- SmartBot Strategic Dashboard Styles --- */
+.dashboard-shell {
+    min-height: 100vh;
+    background: var(--theme-background-gray, #F5F5F7);
+    display: flex;
+    flex-direction: column;
+}
+
 .dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    border-bottom: 1px solid var(--border-color);
-    background-color: var(--surface-color);
+    padding: 1.5rem 2rem;
+    background: var(--theme-surface-white, #FFFFFF);
+    border-bottom: 1px solid var(--theme-border-color, #E1E4E8);
+    box-shadow: var(--theme-shadow-card, 0 4px 12px rgba(0, 0, 0, 0.08));
 }
+
+.dashboard-header h1 {
+    color: var(--theme-text-primary, #001F3F);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    font-family: var(--theme-font-family-heading, 'Poppins', sans-serif);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
 .signout-button {
-    padding: 0.5rem 1rem;
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    border-radius: 6px;
+    background: var(--theme-button-secondary, #F8FAFC);
+    border: 1px solid var(--theme-button-secondary-border, #E1E4E8);
+    border-radius: 8px;
+    color: var(--theme-button-secondary-text, #6A737D);
+    font-weight: 500;
+    font-family: var(--theme-font-family-body, 'Inter', sans-serif);
+    transition: all 0.2s ease;
 }
+
+.signout-button:hover {
+    background: var(--theme-surface-white, #FFFFFF);
+    color: var(--theme-text-primary, #001F3F);
+    box-shadow: var(--theme-shadow-subtle, 0 1px 3px rgba(0, 0, 0, 0.05));
+}
+
 .main-nav {
     display: flex;
-    border-bottom: 1px solid var(--border-color);
-    padding: 0 2rem;
-    background-color: var(--surface-color);
+    gap: 0.5rem;
+    padding: 1.5rem 2rem;
+    background: var(--theme-surface-white, #FFFFFF);
+    border-bottom: 1px solid var(--theme-border-color, #E1E4E8);
 }
+
 .main-nav button {
-    padding: 1rem 1.5rem;
+    padding: 0.875rem 1.5rem;
     border: none;
     background: transparent;
+    color: var(--theme-text-secondary, #6A737D);
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
+    border-radius: 8px;
+    font-weight: 500;
+    font-family: var(--theme-font-family-body, 'Inter', sans-serif);
+    transition: all 0.2s ease;
 }
+
+.main-nav button:hover {
+    color: var(--theme-text-primary, #001F3F);
+    background: var(--theme-surface-hover, rgba(0, 169, 224, 0.05));
+}
+
 .main-nav button.active {
-    color: var(--primary-red);
-    border-bottom-color: var(--primary-red);
+    color: var(--theme-text-inverse, #FFFFFF);
+    background: var(--theme-button-primary, #00A9E0);
+    box-shadow: var(--theme-shadow-button, 0 2px 8px rgba(0, 169, 224, 0.15));
 }
+
 .main-content {
-    padding: 2rem;
+    flex: 1;
+    background: transparent;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .dashboard-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .header-actions {
+        gap: 0.5rem;
+    }
+    
+    .main-nav {
+        padding: 1rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .main-nav button {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
 }

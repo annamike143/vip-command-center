@@ -1,0 +1,214 @@
+/* SmartBot Theme Display - Simple and Clean */
+.theme-selector {
+    position: relative;
+    display: inline-block;
+}
+
+.theme-display {
+    background: var(--theme-surface-glass, rgba(245, 245, 247, 0.95));
+    backdrop-filter: blur(10px);
+    border: 2px solid var(--theme-border-color, #E5E7EB);
+    color: var(--theme-text-primary, #001F3F);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: var(--theme-shadow-primary, 0 4px 15px rgba(0, 169, 224, 0.1));
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.theme-display:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--theme-shadow-hover, 0 8px 30px rgba(0, 169, 224, 0.15));
+    background: var(--theme-surface-card, #FFFFFF);
+}
+
+.theme-dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    z-index: 99999;
+    background: var(--theme-surface-glass, rgba(255, 255, 255, 0.95));
+    backdrop-filter: blur(15px);
+    border: 2px solid var(--theme-border-color, rgba(255, 255, 255, 0.2));
+    border-radius: 20px;
+    box-shadow: var(--theme-shadow-hover, 0 20px 40px rgba(0, 0, 0, 0.15));
+    overflow: hidden;
+    min-width: 300px;
+    max-width: 90vw;
+    max-height: 70vh;
+    animation: dropdownSlideIn 0.3s ease-out;
+}
+
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.theme-options {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--theme-text-accent, #3B82F6) transparent;
+}
+
+.theme-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.theme-options::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.theme-options::-webkit-scrollbar-thumb {
+    background: var(--theme-text-accent, #3B82F6);
+    border-radius: 3px;
+    opacity: 0.6;
+}
+
+.theme-options::-webkit-scrollbar-thumb:hover {
+    opacity: 1;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: var(--theme-surface-card, rgba(255, 255, 255, 0.9));
+    border: 2px solid transparent;
+    text-align: left;
+}
+
+.theme-option:hover {
+    transform: translateX(5px);
+    border-color: var(--theme-border-color, rgba(255, 255, 255, 0.3));
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.theme-option.active {
+    border-color: var(--theme-text-accent, #3B82F6);
+    background: var(--theme-surface-glass, rgba(255, 255, 255, 1));
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.2);
+}
+
+.theme-preview {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.theme-name {
+    flex: 1;
+    font-weight: 600;
+    color: var(--theme-text-primary, #2d3748);
+    font-size: 0.95rem;
+}
+
+.checkmark {
+    color: var(--theme-text-accent, #3B82F6);
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.theme-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99998;
+    background: transparent;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .theme-dropdown {
+        right: auto;
+        left: 0;
+        min-width: 280px;
+        max-width: calc(100vw - 2rem);
+        margin: 0 1rem;
+    }
+    
+    .theme-toggle {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+    
+    .theme-option {
+        padding: 0.8rem;
+    }
+    
+    .theme-preview {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+    
+    .theme-name {
+        font-size: 0.9rem;
+    }
+    
+    .theme-options {
+        max-height: 40vh;
+    }
+}
+
+/* Viewport-aware positioning */
+@media (max-height: 600px) {
+    .theme-dropdown {
+        max-height: 50vh;
+    }
+    
+    .theme-options {
+        max-height: 35vh;
+    }
+}
+
+/* Dark mode compatibility */
+@media (prefers-color-scheme: dark) {
+    .theme-toggle {
+        background: rgba(26, 32, 44, 0.95);
+        color: #e2e8f0;
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .theme-dropdown {
+        background: rgba(26, 32, 44, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .theme-option {
+        background: rgba(45, 55, 72, 0.9);
+        color: #e2e8f0;
+    }
+    
+    .theme-option:hover {
+        background: rgba(45, 55, 72, 1);
+    }
+    
+    .theme-name {
+        color: #e2e8f0;
+    }
+}

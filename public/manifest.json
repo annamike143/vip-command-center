@@ -1,0 +1,88 @@
+{
+  "name": "VIP Command Center - The Mike Salazar Academy",
+  "short_name": "VIP Admin",
+  "description": "Advanced administrative dashboard for VIP platform management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#dc2626",
+  "orientation": "any",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/admin-icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/admin-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "utilities"],
+  "shortcuts": [
+    {
+      "name": "Student Management",
+      "short_name": "Students",
+      "description": "Manage VIP students",
+      "url": "/students",
+      "icons": [{ "src": "/admin-icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Course Builder",
+      "short_name": "Courses",
+      "description": "Build and manage courses",
+      "url": "/courses",
+      "icons": [{ "src": "/admin-icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Analytics",
+      "short_name": "Analytics",
+      "description": "View platform analytics",
+      "url": "/analytics",
+      "icons": [{ "src": "/admin-icon-96x96.png", "sizes": "96x96" }]
+    }
+  ],
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}

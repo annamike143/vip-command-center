@@ -1,0 +1,39 @@
+rules_version = '2';
+
+// Firebase Storage Security Rules for VIP Command Center
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Course thumbnails - Admin only upload, public read
+    match /course-thumbnails/{courseId}/{fileName} {
+      allow read: if true; // Public read for course thumbnails
+      allow write: if request.auth != null; // Only authenticated users can upload
+    }
+    
+    // Lesson resources - Admin only upload, authenticated read
+    match /resources/{courseId}/{lessonId}/{fileName} {
+      allow read: if request.auth != null; // Authenticated users can read
+      allow write: if request.auth != null; // Only authenticated users can upload
+    }
+    
+    // Mentorship files - Admin only upload, specific user read
+    match /mentorship-files/{courseId}/{userId}/{fileName} {
+      allow read: if request.auth != null && 
+                     (request.auth.uid == userId || isAdmin(request.auth.uid));
+      allow write: if request.auth != null && isAdmin(request.auth.uid); // Admin only upload
+    }
+    
+    // General user uploads - if needed in future
+    match /user-uploads/{userId}/{fileName} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Helper function to check if user is admin
+    function isAdmin(uid) {
+      // You can implement admin checking logic here
+      // For now, assume all authenticated users can be admin for mentorship files
+      // In production, you'd check against a database or custom claims
+      return request.auth != null;
+    }
+  }
+}

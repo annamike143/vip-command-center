@@ -1,0 +1,611 @@
+/* SmartBot Strategic Course Builder - SEMANTIC COLOR MAPPING */
+.builder-container {
+    padding: 0;
+    background: var(--color-surface-primary);
+    min-height: 100vh;
+}
+
+.builder-header {
+    background: var(--color-surface-card);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--color-shadow-card);
+    border-bottom: 1px solid var(--color-border-subtle);
+}
+
+.builder-header h1 {
+    color: var(--color-text-headline);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.builder-header .header-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.add-button, .action-button {
+    background: var(--color-action-primary);
+    color: var(--color-text-inverse);
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    box-shadow: var(--color-shadow-accent);
+}
+
+.add-button:hover, .action-button:hover {
+    background: var(--color-action-primary-hover);
+    box-shadow: var(--color-shadow-hover);
+}
+
+.courses-list {
+    display: grid;
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.course-card {
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 16px;
+    box-shadow: var(--color-shadow-card);
+    overflow: hidden;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+/* Premium Course Indicator */
+.course-card.premium::before {
+    content: "⭐ Premium";
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--color-accent-premium);
+    color: var(--color-text-headline);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    z-index: 10;
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--color-shadow-hover);
+}
+
+.course-header, .module-item-header {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-headline);
+    padding: 2rem;
+    border-bottom: 1px solid var(--color-border-subtle);
+    position: relative;
+}
+
+/* Gold enrollment count for premium courses */
+.course-header .enrollment-count {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--color-accent-premium);
+    color: var(--color-text-headline);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.course-header h3, .module-item-header h4 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: var(--color-SEMANTIC);
+}
+
+.course-header .actions, .module-item-header .actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.course-header button, .module-item-header button {
+    background: var(--color-SEMANTIC);
+    color: var(--color-SEMANTIC);
+    border: 1px solid var(--color-SEMANTIC);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-family: var(--color-SEMANTIC);
+    transition: all 0.2s ease;
+}
+
+.course-header button:hover, .module-item-header button:hover {
+    background: var(--color-SEMANTIC);
+    color: var(--color-SEMANTIC);
+}
+
+.course-header button.primary, .module-item-header button.primary {
+    background: var(--color-SEMANTIC);
+    color: var(--color-SEMANTIC);
+    border-color: var(--color-SEMANTIC);
+}
+
+.course-header button.primary:hover, .module-item-header button.primary:hover {
+    background: var(--color-SEMANTIC);
+}
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+.course-header button:hover, .module-item-header button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.remove-button {
+    background: rgba(220, 53, 69, 0.2) !important;
+    border-color: rgba(220, 53, 69, 0.4) !important;
+}
+
+.remove-button:hover {
+    background: rgba(220, 53, 69, 0.4) !important;
+}
+
+.add-module-button, .add-lesson-button {
+    background: rgba(40, 167, 69, 0.2) !important;
+    border-color: rgba(40, 167, 69, 0.4) !important;
+}
+
+.add-module-button:hover, .add-lesson-button:hover {
+    background: rgba(40, 167, 69, 0.4) !important;
+}
+
+.modules-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.module-item {
+    background: var(--color-surface-card);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: var(--color-shadow-card);
+}
+
+.lessons-container {
+    padding: 1.5rem;
+    display: grid;
+    gap: 1rem;
+}
+
+.lesson-item {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.lesson-item:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateX(5px);
+}
+
+.lesson-item span {
+    font-weight: 500;
+    color: #2d3748;
+}
+
+.lesson-item .actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.lesson-item button {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.lesson-item button:hover {
+    background: rgba(102, 126, 234, 0.2);
+    transform: translateY(-1px);
+}
+
+/* Modal Enhancements */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    padding: 1rem;
+}
+
+.modal-content {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 800px;
+    border: none;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: var(--dark-navy, #001F3F);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.modal-content label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.95rem;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    padding: 0.875rem;
+    margin-bottom: 1.5rem;
+    border-radius: 12px;
+    border: 2px solid #e2e8f0;
+    background-color: #f8fafc;
+    color: #2d3748;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    transform: translateY(-1px);
+}
+
+.modal-content textarea {
+    resize: vertical;
+    min-height: 120px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    line-height: 1.6;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #f1f5f9;
+}
+
+.modal-actions button {
+    padding: 0.875rem 2rem;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-actions button[type="button"] {
+    background: #f8fafc;
+    color: #64748b;
+    border: 2px solid #e2e8f0;
+}
+
+.modal-actions button[type="button"]:hover {
+    background: #e2e8f0;
+    transform: translateY(-1px);
+}
+
+.modal-actions .submit-button {
+    background: var(--color-action-primary);
+    color: var(--color-text-inverse);
+    border: none;
+    box-shadow: var(--color-shadow-accent);
+}
+
+.modal-actions .submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.modal-actions .submit-button:disabled {
+    background: #94a3b8;
+    box-shadow: none;
+    transform: none;
+    cursor: not-allowed;
+}
+
+/* Knowledge Base Sections */
+.knowledge-base-section {
+    background: var(--color-surface-elevated);
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 2px solid var(--color-accent-premium);
+}
+
+.knowledge-base-section h4 {
+    color: #2d3748;
+    margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.knowledge-base-textarea {
+    width: 100%;
+    min-height: 200px;
+    padding: 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.3s ease;
+}
+
+.knowledge-base-textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.knowledge-base-preview {
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #2d3748;
+    white-space: pre-wrap;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.variable-guide {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    color: #64748b;
+    border-left: 4px solid #667eea;
+}
+
+/* Resource Manager */
+.resource-manager {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid #f1f5f9;
+}
+
+.resource-manager h4 {
+    color: #2d3748;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.resource-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.resource-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8fafc;
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.add-resource-form {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+    gap: 1rem;
+    align-items: end;
+}
+
+.add-resource-form button {
+    height: 100%;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.add-resource-form button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.4);
+}
+
+/* Course Lifecycle Controls */
+.course-lifecycle-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #e0f2fe 0%, #f3e5f5 100%);
+    border-radius: 12px;
+}
+
+.select-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .builder-header {
+        padding: 1rem;
+    }
+    
+    .builder-header h1 {
+        font-size: 2rem;
+    }
+    
+    .courses-list {
+        padding: 0 1rem;
+    }
+    
+    .course-header, .module-item-header {
+        padding: 1.5rem;
+    }
+    
+    .course-header .actions, .module-item-header .actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .modal-content {
+        padding: 1.5rem;
+        margin: 0.5rem;
+    }
+    
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .course-lifecycle-controls {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .add-resource-form {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .course-card {
+        background: rgba(26, 32, 44, 0.95);
+        color: #e2e8f0;
+    }
+    
+    .lesson-item {
+        background: rgba(45, 55, 72, 0.8);
+        color: #e2e8f0;
+    }
+    
+    .modal-content {
+        background: #1a202c;
+        color: #e2e8f0;
+    }
+    
+    .modal-content input,
+    .modal-content select,
+    .modal-content textarea {
+        background: #2d3748;
+        border-color: #4a5568;
+        color: #e2e8f0;
+    }
+    
+    .knowledge-base-section {
+        background: rgba(45, 55, 72, 0.9);
+    }
+    
+    .knowledge-base-textarea {
+        background: rgba(26, 32, 44, 0.8);
+        color: #e2e8f0;
+        border-color: #4a5568;
+    }
+}

@@ -1,0 +1,122 @@
+/* ===========================================
+   ERROR HANDLING STYLES
+   =========================================== */
+
+.error-notifications {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-width: 400px;
+}
+
+.error-notification {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid;
+  background-color: var(--color-background);
+  animation: slideInRight 0.3s ease-out;
+}
+
+.error-low {
+  border-left-color: var(--color-info);
+  background-color: #eff6ff;
+}
+
+.error-medium {
+  border-left-color: var(--color-warning);
+  background-color: #fffbeb;
+}
+
+.error-high {
+  border-left-color: var(--color-error);
+  background-color: #fef2f2;
+}
+
+.error-critical {
+  border-left-color: #dc2626;
+  background-color: #fef2f2;
+  box-shadow: var(--shadow-xl);
+}
+
+.error-content {
+  flex: 1;
+}
+
+.error-title {
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.error-message {
+  margin: 0 0 var(--space-sm) 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+.error-action-btn {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.error-action-btn:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.error-close {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  padding: var(--space-xs);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.error-close:hover {
+  background-color: var(--color-hover);
+  color: var(--color-text);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .error-notifications {
+    top: 0.5rem;
+    right: 0.5rem;
+    left: 0.5rem;
+    max-width: none;
+  }
+  
+  .error-notification {
+    padding: var(--space-sm);
+  }
+}

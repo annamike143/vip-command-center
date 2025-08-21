@@ -1,0 +1,99 @@
+{
+  "deployment": {
+    "name": "VIP Command Center",
+    "version": "1.0.0",
+    "environment": "production",
+    "domains": {
+      "primary": "admin.mikesalazaracademy.com",
+      "fallback": "vip-admin.vercel.app"
+    },
+    "ssl": {
+      "enabled": true,
+      "forceHttps": true,
+      "certificate": "auto"
+    },
+    "access_control": {
+      "ip_whitelist": true,
+      "admin_only": true,
+      "two_factor": true
+    }
+  },
+  "firebase": {
+    "projectId": "vip-academy-production",
+    "region": "us-central1",
+    "services": {
+      "authentication": true,
+      "database": true,
+      "storage": true,
+      "functions": true,
+      "analytics": true
+    },
+    "admin_privileges": true
+  },
+  "environment_variables": {
+    "required": [
+      "NEXT_PUBLIC_FIREBASE_API_KEY",
+      "NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN",
+      "NEXT_PUBLIC_FIREBASE_PROJECT_ID",
+      "NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET",
+      "NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID",
+      "NEXT_PUBLIC_FIREBASE_APP_ID",
+      "NEXT_PUBLIC_FIREBASE_DATABASE_URL",
+      "FIREBASE_ADMIN_PRIVATE_KEY",
+      "FIREBASE_ADMIN_CLIENT_EMAIL",
+      "ADMIN_SECRET_KEY"
+    ],
+    "optional": [
+      "NEXT_PUBLIC_ANALYTICS_ENABLED",
+      "NEXT_PUBLIC_COMMAND_CENTER_URL",
+      "NEXT_PUBLIC_LEARNING_REALM_URL"
+    ]
+  },
+  "security": {
+    "headers": {
+      "hsts": true,
+      "csp": "strict",
+      "frame_options": "DENY",
+      "no_sniff": true
+    },
+    "authentication": {
+      "session_timeout": "30m",
+      "max_login_attempts": 3,
+      "lockout_duration": "15m"
+    },
+    "audit_logging": {
+      "enabled": true,
+      "retain_days": 90
+    }
+  },
+  "performance": {
+    "caching": {
+      "disabled": true,
+      "no_cache_headers": true
+    },
+    "compression": {
+      "enabled": true,
+      "level": 6
+    }
+  },
+  "monitoring": {
+    "admin_activity": true,
+    "security_alerts": true,
+    "performance_monitoring": true,
+    "alerts": {
+      "failed_logins": "> 5/hour",
+      "unauthorized_access": "immediate",
+      "system_errors": "> 1%"
+    }
+  },
+  "backup": {
+    "database": {
+      "frequency": "daily",
+      "retention": "30d"
+    },
+    "user_data": {
+      "frequency": "hourly",
+      "retention": "7d"
+    }
+  }
+}

@@ -1,0 +1,326 @@
+/* AI Settings Manager Styles */
+.ai-settings-manager {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.ai-settings-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.ai-settings-header h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.ai-settings-header p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.ai-settings-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #e1e8ed;
+}
+
+.ai-tab {
+    background: none;
+    border: none;
+    padding: 15px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    color: #666;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s ease;
+    margin: 0 5px;
+}
+
+.ai-tab:hover {
+    color: #2c3e50;
+    background-color: #f8f9fa;
+}
+
+.ai-tab.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+    font-weight: 600;
+}
+
+.ai-settings-content {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.instruction-editor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.editor-section h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.instruction-textarea {
+    width: 100%;
+    min-height: 400px;
+    padding: 15px;
+    border: 2px solid #e1e8ed;
+    border-radius: 8px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.instruction-textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.load-default-btn {
+    margin-top: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+
+.load-default-btn:hover {
+    background: #218838;
+}
+
+.preview-section h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.preview-box {
+    background: #f8f9fa;
+    border: 1px solid #e1e8ed;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 400px;
+    white-space: pre-wrap;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #2c3e50;
+    overflow-y: auto;
+}
+
+.global-settings {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.global-settings h3 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.settings-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e1e8ed;
+}
+
+.setting-row label {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 16px;
+    flex: 1;
+}
+
+.setting-row select,
+.setting-row input {
+    flex: 2;
+    max-width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.setting-row select:focus,
+.setting-row input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.preview-data-editor {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.preview-data-editor h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.preview-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.preview-inputs input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.preview-inputs input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.1);
+}
+
+.save-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.save-button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.save-button:hover:not(:disabled) {
+    background: #0056b3;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.save-button:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.ai-settings-loading {
+    text-align: center;
+    padding: 50px;
+    font-size: 18px;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .instruction-editor {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .ai-settings-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .ai-tab {
+        margin: 5px 0;
+        width: 200px;
+        text-align: center;
+    }
+    
+    .preview-inputs {
+        grid-template-columns: 1fr;
+    }
+    
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .setting-row select,
+    .setting-row input {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .ai-settings-content,
+    .preview-data-editor {
+        background: #1a1a1a;
+        color: #e1e8ed;
+    }
+    
+    .ai-settings-header h2,
+    .editor-section h3,
+    .preview-section h4,
+    .global-settings h3,
+    .preview-data-editor h4 {
+        color: #e1e8ed;
+    }
+    
+    .instruction-textarea,
+    .preview-box {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #e1e8ed;
+    }
+    
+    .setting-row {
+        background: #2a2a2a;
+        border-color: #444;
+    }
+    
+    .setting-row label {
+        color: #e1e8ed;
+    }
+    
+    .preview-inputs input,
+    .setting-row select,
+    .setting-row input {
+        background: #2a2a2a;
+        border-color: #444;
+        color: #e1e8ed;
+    }
+}

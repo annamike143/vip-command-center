@@ -93,7 +93,7 @@ const MentorshipInbox = () => {
                                     className={`thread-item ${selectedThreadKey === `${courseId}___${userId}` ? 'active' : ''}`}
                                     onClick={() => setSelectedThreadKey(`${courseId}___${userId}`)}
                                 >
-                                    <div className="thread-user">{users[userId]?.profile?.name || 'Unknown User'}</div>
+                                    <div className="thread-user">{users[userId]?.profile?.firstName ? `${users[userId].profile.firstName} ${users[userId].profile.lastName || ''}` : 'Unknown User'}</div>
                                     <div className="thread-lesson">{courses[courseId]?.details?.title || 'Unknown Course'}</div>
                                 </div>
                             )) : <div className="empty-threads">No messages yet.</div>}
@@ -105,11 +105,11 @@ const MentorshipInbox = () => {
                             <>
                                 <div className="panel-header">
                                     <h3>{courses[selectedThread.courseId]?.details?.title}</h3>
-                                    <p>Conversation with {users[selectedThread.userId]?.profile?.name}</p>
+                                    <p>Conversation with {users[selectedThread.userId]?.profile?.firstName ? `${users[selectedThread.userId].profile.firstName} ${users[selectedThread.userId].profile.lastName || ''}` : 'Unknown User'}</p>
                                     <div className="ai-toggle">
                                         <span>AI Status: <strong>{selectedThread.aiStatus || 'active'}</strong></span>
-                                        <button onClick={() => handleAiToggle('paused')} disabled={selectedThread.aiStatus === 'paused'}>Take Over</button>
-                                        <button onClick={() => handleAiToggle('active')} disabled={selectedThread.aiStatus !== 'paused'}>Handover to AI</button>
+                                        <button onClick={() => handleAiToggle('paused')} disabled={selectedThread.aiStatus === 'paused'}>🔴 Take Over</button>
+                                        <button onClick={() => handleAiToggle('active')} disabled={selectedThread.aiStatus !== 'paused'}>🟢 Handover to AI</button>
                                     </div>
                                 </div>
                                 <div className="messages-area">
@@ -117,7 +117,13 @@ const MentorshipInbox = () => {
                                         const msg = selectedThread.messages[msgId];
                                         return (
                                             <div key={msgId} className={`message-bubble ${msg.sender}`}>
-                                                {msg.sender === 'assistant' && <span className="sender-label">AI Concierge</span>}
+                                                {msg.sender === 'assistant' && (
+                                                    <span className="sender-label">
+                                                        {msg.isAIGenerated ? '🤖 AI Generated Response' : 'AI Concierge'}
+                                                    </span>
+                                                )}
+                                                {msg.sender === 'admin' && <span className="sender-label">👨‍🏫 Instructor</span>}
+                                                {msg.sender === 'user' && <span className="sender-label">👨‍🎓 Student</span>}
                                                 {msg.text}
                                             </div>
                                         )
@@ -125,8 +131,14 @@ const MentorshipInbox = () => {
                                     <div ref={messagesEndRef} />
                                 </div>
                                 <form className="reply-form" onSubmit={handleSendReply}>
-                                    <input type="text" value={replyText} onChange={(e) => setReplyText(e.target.value)} placeholder="Type your reply as the Mentor..." />
-                                    <button type="submit">Send</button>
+                                    <input 
+                                        type="text" 
+                                        value={replyText} 
+                                        onChange={(e) => setReplyText(e.target.value)} 
+                                        placeholder={selectedThread.aiStatus === 'paused' ? "Type your reply as the Mentor..." : "AI is active - Take over to reply"}
+                                        disabled={selectedThread.aiStatus !== 'paused'}
+                                    />
+                                    <button type="submit" disabled={selectedThread.aiStatus !== 'paused'}>Send</button>
                                 </form>
                             </>
                         ) : (
